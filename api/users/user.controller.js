@@ -5,7 +5,7 @@ const {
     getUsers,
     updateUser,
     deleteUser
-} = require("./user.service");
+ } = require("./user.service");
 const { hashSync, genSaltSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 
@@ -87,12 +87,18 @@ module.exports = {
     },
     updateUsers: (req, res) => {
         const body = req.body;
-        const salt = genSaltSync(10);
-        body.password = hashSync(body.password, salt);
+        // const salt = genSaltSync(10);
+        // body.password = hashSync(body.password, salt);
         updateUser(body, (err, results) => {
             if (err) {
                 console.log(err);
                 return;
+            }
+            if (!results) {
+                return res.json({
+                    success: 0,
+                    data: "failed to update user"
+                });
             }
             return res.json({
                 success: 1,
@@ -132,10 +138,10 @@ module.exports = {
                 });
             }
           
-            const result = compareSync(body.password, results.password);
+            // const result = compare(body.password, results.password);
             
             
-                if (result)
+                if (results)
                 {
                 results.password = undefined;
                 const jsontoken = sign({ result: results }, "qwe1234", {

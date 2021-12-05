@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { checkToken } = require("../../auth/token");
+// const { checkToken } = require("../../auth/token");
 const {
     createUser,
      login,
@@ -8,12 +8,12 @@ const {
      updateUsers,
      deleteUser
   } = require("./user.controller");
-  router.post("/",checkToken, createUser);
-   router.get("/",checkToken, getUsers);
-   router.get("/:id", checkToken,getUserByUserId);
+  router.post("/", createUser);
+   router.get("/", getUsers);
+   router.get("/:id", getUserByUserId);
 router.post("/login", login);
-router.patch("/", checkToken,updateUsers);
-router.delete("/",checkToken, deleteUser);
+router.patch("/", updateUsers);
+router.delete("/", deleteUser);
 
 
 
